@@ -1,5 +1,5 @@
 //
-//  Donation Ori.cpp
+//  Donation no.cpp
 //  Pointers
 //
 //  Created by Mikha Yupikha on 05/10/2016.
@@ -10,8 +10,12 @@
 // by the employees of CK Graphics, Inc. It displays
 // the donations in order from lowest to highest
 // and in the original order they were received.
+
 #include <iostream>
+#include <fstream>
 using namespace std;
+
+ofstream MyFile;
 
 // Function prototypes
 void arrSelectSort(int *[], int);
@@ -21,6 +25,7 @@ void showArrPtr(int *[], int);
 int main()
 {
     const int NUM_DONATIONS = 15; // Number of donations
+    // fstream outfile ("Descending order of Donation.txt", fstream::out);
     
     // An array containing the donation amounts.
     int donations[NUM_DONATIONS] = { 5, 100, 5, 25, 10,
@@ -42,12 +47,17 @@ int main()
     
     // Display the donations using the array of pointers. This
     // will display them in sorted order.
-    cout << "The donations, sorted in ascending order are: \n";
+    MyFile.open ("DescendingOrderDonation.txt");
+    MyFile << "The donations, sorted in descending order are: \n";
     showArrPtr(arrPtr, NUM_DONATIONS);
+    MyFile.close();
     
     // Display the donations in their original order.
-    cout << "The donations, in their original order are: \n";
+    MyFile.open ("DescendingOrderDonation.txt");
+    MyFile << "The donations, in their original order are: \n";
     showArray(donations, NUM_DONATIONS);
+    MyFile.close();
+    
     return 0;
 }
 
@@ -71,7 +81,7 @@ void arrSelectSort(int *arr[], int size)
         minElem = arr[startScan];
         for(int index = startScan + 1; index < size; index++)
         {
-            if (*(arr[index]) < *minElem)
+            if (*(arr[index]) > *minElem)
             {
                 minElem = arr[index];
                 minIndex = index;
@@ -90,8 +100,10 @@ void arrSelectSort(int *arr[], int size)
 void showArray(const int arr[], int size)
 {
     for (int count = 0; count < size; count++)
-        cout << arr[count] << " ";
-    cout << endl;
+        
+        MyFile<< arr[count] << " ";
+    
+    MyFile<<endl;
 }
 
 //***************************************************************
@@ -103,6 +115,10 @@ void showArray(const int arr[], int size)
 void showArrPtr(int *arr[], int size)
 {
     for (int count = 0; count < size; count++)
-        cout << *(arr[count]) << " ";
-    cout << endl;
+        
+        MyFile << *(arr[count]) << " ";
+    
+    MyFile << endl;
+    
 }
+
